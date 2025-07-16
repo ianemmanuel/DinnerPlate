@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 25% 97%;
+    --foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 25 50% 35%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 30 30% 92%;
+    --secondary-foreground: 24 9.8% 10%;
+    --muted: 30 25% 95%;
+    --muted-foreground: 25 5.9% 44.5%;
+    --accent: 28 40% 85%;
+    --accent-foreground: 24 9.8% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 25 30% 90%;
+    --input: 25 30% 90%;
+    --ring: 25 50% 35%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 20 14.3% 4.1%;
+    --foreground: 60 9.1% 97.8%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 97.8%;
+    --primary: 28 40% 65%;
+    --primary-foreground: 20 14.3% 4.1%;
+    --secondary: 25 20% 15%;
+    --secondary-foreground: 60 9.1% 97.8%;
+    --muted: 25 20% 15%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 25 20% 15%;
+    --accent-foreground: 60 9.1% 97.8%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 25 20% 15%;
+    --input: 25 20% 15%;
+    --ring: 28 30% 70%;
+  }
+}
+@layer utilities {
+  .animate-fadeInUp {
+    @apply opacity-0 translate-y-4;
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .delay-100 { animation-delay: 0.1s; }
+  .delay-300 { animation-delay: 0.3s; }
+  .delay-500 { animation-delay: 0.5s; }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.image-loading {
+  @apply animate-pulse bg-muted;
+}
+
+.image-error {
+  @apply bg-muted flex items-center justify-center text-muted-foreground;
+}
+
+.slider-arrow {
+  @apply absolute top-1/2 -translate-y-1/2 bg-background/80 backdrop-blur-sm hover:bg-background/90 rounded-full p-2 shadow-lg cursor-pointer transition-all z-10;
+}
+
+.slider-arrow-left {
+  @apply -left-4;
+}
+
+.slider-arrow-right {
+  @apply -right-4;
+}
+
+.slider-container {
+  @apply relative;
+}
+
+.slider-container .slider-arrow {
+  @apply opacity-0 group-hover:opacity-100 transition-opacity;
+}
+
+.chat-message {
+  @apply p-4 rounded-lg max-w-[80%];
+}
+
+.chat-message-received {
+  @apply bg-secondary text-secondary-foreground self-start rounded-br-lg;
+}
+
+.chat-message-sent {
+  @apply bg-primary text-primary-foreground self-end rounded-bl-lg;
+}
+
+.notification-item {
+  @apply p-4 border-b last:border-b-0 hover:bg-accent/50 transition-colors cursor-pointer;
+}
+
+.notification-item.unread {
+  @apply bg-accent/30;
+}
+
+.deal-card {
+  @apply relative overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm transition-all hover:shadow-md;
+}
+
+.deal-badge {
+  @apply absolute top-4 right-4 bg-destructive text-destructive-foreground px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.deal-timer {
+  @apply text-sm text-muted-foreground flex items-center gap-2;
+}

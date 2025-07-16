@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "tailwind.config.js",
+    "css": "src/app/global.css",
+    "baseColor": "slate",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@restaurant-webapp/components",
+    "utils": "@restaurant-webapp/lib/utils",
+    "ui": "@restaurant-webapp/components/ui",
+    "lib": "@restaurant-webapp/lib",
+    "hooks": "@restaurant-webapp/hooks"
+  },
+  "iconLibrary": "lucide"
+}

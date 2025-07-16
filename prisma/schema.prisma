@@ -1,0 +1,284 @@
+ 
+generator client {
+  provider = "prisma-client-js"
+  //output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+
+model users {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  email String @unique
+  password String?
+  avatar images?
+  vendorReviews VendorReviews[]
+  following String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+
+enum VendorType {
+  restaurant
+  commercial_kitchen
+}
+
+enum VendorStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  NEEDS_REVISION
+}
+
+enum DocumentType {
+  BUSINESS_LICENSE
+  HEALTH_CERTIFICATE
+  NATIONAL_ID
+}
+
+enum DocumentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model VendorReviews {
+    id    String   @id @default(auto()) @map("_id") @db.ObjectId
+    userId  String  @db.ObjectId
+    user    users   @relation(fields:[userId], references: [id])
+    rating  Float
+    reviews String?
+    vendorId String? @db.ObjectId
+    vendor  VendorProfile? @relation(fields: [vendorId], references: [id])
+    createdAt DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+    
+}
+
+
+model Vendor {
+  id                String         @id @default(auto()) @map("_id") @db.ObjectId
+  type              VendorType
+  status            VendorStatus   @default(PENDING)
+  businessName      String
+  legalBusinessName String?
+  businessEmail     String         @unique
+  businessPhone     String         @unique
+  ownerFirstName    String
+  ownerLastName     String
+  password          String
+  emailVerified     Boolean        @default(false)
+  phoneVerified     Boolean        @default(false)
+  agreedToTerms     Boolean        @default(false)
+  address           VendorAddress?
+  documents         Document[]
+  branches          Branch[]
+  bankAccounts  VendorBankAccount[]
+  rejectionReason   String?
+  revisionNotes     String?
+  stripeId          String?
+  profile           VendorProfile?
+  profileId         String?        @db.ObjectId
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  refreshToken     String?
+  hasCompletedProfile   Boolean   @default(false)
+  hasLinkedBankAccount  Boolean   @default(false)
+}
+
+model VendorProfile {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  vendor       Vendor         @relation(fields: [vendorId], references: [id])
+  vendorId     String         @unique @db.ObjectId
+  avatar       String?
+  bio          String?
+  coverBanner  String?
+  openingHours Json?          // Structured opening hours (better than String)
+  meals             Meal[]
+  mealPlans         MealPlan[]
+  website      String?
+  socialLinks  Json[]         // Array of structured social links
+  ratings      Float          @default(0)
+  reviews      VendorReviews[]
+  images       String[]  
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+model VendorBankAccount {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  vendor        Vendor   @relation(fields: [vendorId], references: [id])
+  vendorId      String   @db.ObjectId
+
+  bankName      String
+  branchName    String
+  bankCode      String
+  accountNumber String // Will be encrypted
+  accountName   String // Will be encrypted
+  swiftCode     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+
+model VendorAddress {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  country     String?
+  city        String?
+  street      String?
+  postalCode  String?
+  latitude    Float?
+  longitude   Float?
+  
+  //* Relations - only one will be set
+  vendor      Vendor?  @relation(fields: [vendorId], references: [id])
+  vendorId    String?  @unique @db.ObjectId
+  branch      Branch?
+}
+
+model Document {
+  id          String         @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  type        DocumentType
+  status      DocumentStatus @default(PENDING)
+  url         String
+  name        String
+  size        Int
+  mimeType    String
+  vendor      Vendor         @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId    String          @db.ObjectId 
+  notes       String?
+}
+
+// model VendorImages {
+//   id             String        @id @default(auto()) @map("_id") @db.ObjectId
+//   file_id        String
+//   url            String
+//   vendorProfile  VendorProfile @relation(fields: [vendorProfileId], references: [id])
+//   vendorProfileId String        @db.ObjectId  // Remove @unique (allows multiple images per profile)
+// }cls
+
+
+model Branch {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  name          String
+  phone         String
+  address       VendorAddress   @relation(fields: [addressId], references: [id], onDelete: Cascade)
+  addressId     String    @unique
+  vendor        Vendor    @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId      String    @db.ObjectId 
+  deliveryRadius Float
+  isActive      Boolean   @default(true)
+  openingHours  Json // Store as structured JSON
+}
+
+model MealPlanMeal {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  meal      Meal     @relation(fields: [mealId], references: [id])
+  mealId    String   @db.ObjectId
+  mealPlan  MealPlan @relation(fields: [mealPlanId], references: [id])
+  mealPlanId String  @db.ObjectId
+  createdAt DateTime @default(now())
+  
+  @@unique([mealId, mealPlanId])
+}
+
+model MealPlan {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  description String
+  images String[]
+  price       Float
+  duration    Int      // in days
+  isActive    Boolean  @default(true)
+  vendor      VendorProfile   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId    String   @db.ObjectId 
+  mealPlanMeals MealPlanMeal[]
+}
+
+model images {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  file_id String
+  url     String
+  userId  String? @db.ObjectId @unique
+  users users? @relation(fields: [userId], references: [id])
+}
+
+
+model Meal {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  category    String
+  basePrice    Float
+  totalPrice   Float
+  description String?
+  mainImage           String?
+  galleryImages       String[]
+  
+  // Variants/Add-ons (JSON)
+  variants      MealVariant[]         // Array of Variant objects
+  addOns        Json?         // Array of AddOn objects
+  
+  dietaryTags         String[]
+  allergens           String[]
+  
+  // Availability
+  availabilityType    String        @default("Always Available")
+  availabilitySchedule Json?
+  isActive            Boolean       @default(true)
+  isPopular            Boolean       @default(false)
+  isRecommended        Boolean       @default(false)
+  isProfileFeatured    Boolean       @default(false)
+  publish              Boolean       @default(true)
+  
+  //* Relations
+  vendorProfile       VendorProfile @relation(fields: [vendorProfileId], references: [id])
+  vendorProfileId     String        @db.ObjectId
+  promotions          Promotion[]
+  mealPlans   MealPlanMeal[]
+  
+  // Indexes
+  @@index([vendorProfileId])
+  @@index([category])
+  @@index([isPopular])
+  @@index([isRecommended])
+}
+
+model MealVariant {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  name        String     // "Size", "Spice Level"
+  isRequired  Boolean    @default(false)
+  meal        Meal       @relation(fields: [mealId], references: [id])
+  mealId      String     @db.ObjectId
+  options     Json[]
+  
+  @@unique([mealId, name]) // Prevent duplicate variant names per meal
+}
+
+model Promotion {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  type       String    // "percentage" | "fixed" | "bogo"
+  value      Float
+  label      String
+  startDate  DateTime?
+  endDate    DateTime?
+  isActive   Boolean   @default(true)
+  meal       Meal      @relation(fields: [mealId], references: [id])
+  mealId     String    @db.ObjectId
+  publish    Boolean   @default(true)
+  
+  @@index([mealId])
+  @@index([isActive])
+}

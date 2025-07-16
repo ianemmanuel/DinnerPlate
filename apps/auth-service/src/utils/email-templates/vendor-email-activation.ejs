@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activate Your Vendor Account</title>
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.5;
+            color: hsl(var(--foreground));
+            background-color: hsl(var(--background));
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Email Container */
+        .email-container {
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Card */
+        .card {
+            background-color: hsl(var(--card));
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid hsl(var(--border));
+        }
+        
+        /* Header */
+        .header {
+            padding: 32px 0;
+            text-align: center;
+            background-color: hsl(var(--primary)/0.08);
+            border-bottom: 1px solid hsl(var(--border));
+        }
+        
+        .logo {
+            height: 42px;
+            margin-bottom: 16px;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 600;
+            color: hsl(var(--primary));
+            letter-spacing: -0.25px;
+        }
+        
+        /* Content */
+        .content {
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .illustration {
+            width: 140px;
+            margin: 0 auto 24px;
+            display: block;
+        }
+        
+        p {
+            margin: 16px 0;
+            color: hsl(var(--muted-foreground));
+            font-size: 15px;
+        }
+        
+        .highlight {
+            color: hsl(var(--foreground));
+            font-weight: 500;
+        }
+        
+        /* OTP Display */
+        .otp-container {
+            margin: 32px 0;
+        }
+        
+        .otp-code {
+            font-size: 32px;
+            letter-spacing: 8px;
+            color: hsl(var(--primary));
+            font-weight: 600;
+            margin: 0 auto;
+            padding: 12px 24px;
+            background-color: hsl(var(--accent));
+            border-radius: var(--radius);
+            display: inline-block;
+            border: 1px dashed hsl(var(--primary)/0.3);
+        }
+        
+        /* Button */
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: hsl(var(--primary));
+            color: hsl(var(--primary-foreground)) !important;
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-weight: 500;
+            margin: 24px 0;
+            transition: all 0.2s ease;
+            font-size: 15px;
+        }
+        
+        .button:hover {
+            background-color: hsl(var(--primary)/0.9);
+            transform: translateY(-1px);
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 24px;
+            text-align: center;
+            font-size: 13px;
+            color: hsl(var(--muted-foreground));
+            background-color: hsl(var(--muted));
+            border-top: 1px solid hsl(var(--border));
+        }
+        
+        .footer-links {
+            margin-top: 12px;
+        }
+        
+        .footer-links a {
+            color: hsl(var(--muted-foreground));
+            text-decoration: none;
+            margin: 0 8px;
+            transition: color 0.2s ease;
+        }
+        
+        .footer-links a:hover {
+            color: hsl(var(--primary));
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .content {
+                padding: 32px 24px;
+            }
+            
+            .otp-code {
+                font-size: 24px;
+                letter-spacing: 6px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="card">
+            <div class="header">
+                <!-- Replace with your logo -->
+                <svg class="logo" width="120" height="32" viewBox="0 0 120 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 22L15 12L20 22" stroke="hsl(var(--primary))" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12.5 18.5H17.5" stroke="hsl(var(--primary))" stroke-width="2" stroke-linecap="round"/>
+                    <text x="30" y="20" font-family="Inter" font-weight="600" font-size="18" fill="hsl(var(--primary))">Spicy</text>
+                </svg>
+                <h1>Vendor Account Activation</h1>
+            </div>
+            
+            <div class="content">
+                <!-- Food illustration -->
+                <svg class="illustration" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="60" cy="60" r="60" fill="hsl(var(--accent))"/>
+                    <path d="M40 40C40 60 60 80 80 80" stroke="hsl(var(--primary))" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="40" cy="40" r="12" fill="hsl(var(--primary))"/>
+                    <circle cx="60" cy="50" r="8" fill="hsl(var(--primary))"/>
+                    <circle cx="80" cy="60" r="10" fill="hsl(var(--primary))"/>
+                    <path d="M30 90H90" stroke="hsl(var(--primary))" stroke-width="4" stroke-linecap="round"/>
+                </svg>
+                
+                <p class="highlight">Welcome to Spicy's vendor network!</p>
+                <p>We're excited to help you connect with hungry customers looking for your delicious meals and meal plans.</p>
+                
+                <div class="otp-container">
+                    <p>Your activation code:</p>
+                    <div class="otp-code"><%= otp %></div>
+                    <p>Valid for 15 minutes</p>
+                </div>
+                
+                <a href="https://app.Spicy.com/activate?token=<%= otp %>" class="button">
+                    Activate Account
+                </a>
+                
+                <p>If you didn't request this, please ignore this email or contact our support team.</p>
+            </div>
+            
+            <div class="footer">
+                <p>© <script>document.write(new Date().getFullYear())</script> Spicy. All rights reserved.</p>
+                <p>Connecting kitchens with food lovers</p>
+                <div class="footer-links">
+                    <a href="#">Help Center</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
