@@ -3,7 +3,6 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Card } from "@user-webapp/components/ui/card"
-import { Button } from "@user-webapp/components/ui/button"
 import { Heart, Star, ShoppingBag } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"

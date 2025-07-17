@@ -11,6 +11,8 @@ export type Category = {
   isNew?: boolean
   isHealthy?: boolean
   tags?: string[]
+  createdAt?: string
+  updatedAt?: string 
 }
 
 export type CategoryGridProps = {

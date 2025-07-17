@@ -92,7 +92,7 @@ export default  function DesktopNavbar() {
           <>
             <LanguageDropdown />
             <ThemeToggle />
-            <UserDropdown/>
+            <UserDropdown user={user} />
           </>
         ) : (
           <>

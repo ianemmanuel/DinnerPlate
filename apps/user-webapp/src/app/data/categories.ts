@@ -69,6 +69,7 @@ export const category = {
   isPopular: true,
   tags: ["vegan", "vegetarian", "healthy", "sustainable"],
   itemCount: 128,
+  restaurant: "Dinner Plate",
   createdBy: "Dinner Plate",
   createdAt: "2023-10-15"
 }

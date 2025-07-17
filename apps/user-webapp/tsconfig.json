@@ -50,10 +50,11 @@
   //   ".next"
   // ]
   "include": [
+    ".next/types/**/*.ts",
     "next-env.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
-    ".next/types/**/*.ts"
+    "../../dist/apps/user-webapp/.next/types/**/*.ts"
   ], //*added
   "exclude": [
     "node_modules",

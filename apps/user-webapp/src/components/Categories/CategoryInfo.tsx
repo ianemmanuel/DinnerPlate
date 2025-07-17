@@ -1,13 +1,10 @@
 import { Badge } from "@user-webapp/components/ui/badge";
 import { Award, Leaf, Zap, Flame } from "lucide-react";
-import { CategoryStats } from "@user-webapp/components/Categories/CategoryStats"
+import { CategoryStats } from "@user-webapp/components/Categories/CategoryStats";
+import { Category } from "@user-webapp/types/category"
 
 interface CategoryInfoProps {
-  category: {
-    name: string;
-    description: string;
-    tags: string[];
-  };
+  category: Category;
 }
 
 export function CategoryInfo({ category }: CategoryInfoProps) {
@@ -16,16 +13,19 @@ export function CategoryInfo({ category }: CategoryInfoProps) {
       <div className="grid md:grid-cols-3 gap-8">
         <div className="md:col-span-2">
           <h2 className="text-2xl font-semibold mb-4">About This Category</h2>
-          <p className="text-muted-foreground mb-6">{category.description}</p>
-          
+          <p className="text-muted-foreground mb-6">
+            {/* You can add a `description` field to Category if needed */}
+            This category features carefully selected meals focused on quality, health, and innovation.
+          </p>
+
           <div className="flex flex-wrap gap-2 mb-8">
-            {category.tags.map(tag => (
+            {category.tags?.map((tag) => (
               <Badge key={tag} variant="secondary" className="px-3 py-1 text-sm">
                 {tag}
               </Badge>
             ))}
           </div>
-          
+
           <div className="bg-secondary/30 p-6 rounded-lg border border-border">
             <h3 className="font-medium mb-2 flex items-center gap-2">
               <Award className="w-5 h-5 text-primary" />
@@ -47,7 +47,7 @@ export function CategoryInfo({ category }: CategoryInfoProps) {
             </ul>
           </div>
         </div>
-        
+
         <CategoryStats category={category} />
       </div>
     </section>
