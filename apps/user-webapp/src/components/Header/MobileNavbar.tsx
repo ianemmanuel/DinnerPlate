@@ -2,8 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { ChefHat, Search, ShoppingCart, Menu, Home, LogOut } from 'lucide-react'
-import { Input } from '../ui/input'
+import { ChefHat, ShoppingCart, Menu, Home, LogOut } from 'lucide-react'
 import { Button } from '../ui/button'
 import IconButton from './IconButton'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetClose, SheetDescription } from '../ui/sheet'
@@ -21,14 +20,8 @@ type MobileNavbarProps = {
 }
 
 export default function MobileNavbar({ user }: MobileNavbarProps) {
-  const [searchQuery, setSearchQuery] = useState('')
   const [isOpen, setIsOpen] = useState(false)
   const [isBrowseOpen, setIsBrowseOpen] = useState(false)
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('Search submitted:', searchQuery)
-  }
 
   return (
     <>
@@ -103,21 +96,6 @@ export default function MobileNavbar({ user }: MobileNavbarProps) {
         <IconButton href="/cart" icon={ShoppingCart} badge={11} />
       </div>
 
-      {/* Search Bar */}
-      <div className="px-4 pb-3 lg:hidden">
-        <form onSubmit={handleSearchSubmit} className="flex w-full gap-2">
-          <Input
-            type="search"
-            placeholder="Search meals, restaurants..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-1 rounded-md border border-primary"
-          />
-          <Button type="submit" size="icon" className="rounded-md bg-primary text-white">
-            <Search className="h-4 w-4" />
-          </Button>
-        </form>
-      </div>
     </>
   )
 }

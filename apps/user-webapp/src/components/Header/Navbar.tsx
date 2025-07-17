@@ -4,9 +4,8 @@ import IconButton from './IconButton'
 import LanguageDropdown from './LanguageDropdown'
 import ThemeToggle from './ThemeToggle'
 import UserDropdown from './UserDropdown'
-import { ChefHat, Search, ShoppingBag } from 'lucide-react'
+import { ChefHat, ShoppingBag } from 'lucide-react'
 import { Button } from '../ui/button'
-import { Input } from '../ui/input'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -24,9 +23,6 @@ export default function Navbar() {
     const {getUser, isLoading} = useKindeBrowserClient()
     const user =  getUser()
 
-    const handleSearchSubmit = (e: React.FormEvent) => {
-      e.preventDefault()
-    }
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background shadow-md">
@@ -70,18 +66,6 @@ export default function Navbar() {
             ))}
           </NavigationMenuList>
         </NavigationMenu>
-
-        {/* Search Bar */}
-        <form onSubmit={handleSearchSubmit} className="ml-6 flex w-full max-w-md">
-          <Input
-            type="search"
-            placeholder="Search meals, restaurants...etc"
-            className="rounded-l-md border border-primary"
-          />
-          <Button type="submit" className="rounded-r-md border border-primary border-l-0 bg-primary text-white">
-            <Search className="h-4 w-4" />
-          </Button>
-        </form>
 
         {/* Actions */}
         <div className="flex items-center gap-3 ml-6">
