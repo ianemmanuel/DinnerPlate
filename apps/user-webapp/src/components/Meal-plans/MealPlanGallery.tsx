@@ -25,6 +25,7 @@ export default function MealPlanGallery({ name, image, gallery, isPopular, isFea
           src={image}
           alt={name}
           fill
+          sizes="(min-width: 1540px) 736px, (min-width: 1380px) 608px, (min-width: 1280px) 759px, (min-width: 1040px) 586px, (min-width: 820px) 904px, (min-width: 780px) 736px, (min-width: 680px) 608px, calc(94.44vw - 15px)"
           className="object-cover transition-opacity opacity-0 duration-500"
           priority
           ref={mainImageRef}
@@ -67,6 +68,7 @@ export default function MealPlanGallery({ name, image, gallery, isPopular, isFea
                   src={url}
                   alt={`${name} ${url}`}
                   fill
+                  sizes="(min-width: 1540px) 237px, (min-width: 1320px) 195px, (min-width: 1280px) calc(-490vw + 6565px), (min-width: 1040px) 228px, (min-width: 780px) 356px, (min-width: 740px) 293px, (min-width: 680px) 195px, calc(31.67vw - 14px)"
                   className="object-cover transition-opacity opacity-0 duration-500"
                   ref={ref}
                   onLoad={() => {
@@ -74,6 +76,7 @@ export default function MealPlanGallery({ name, image, gallery, isPopular, isFea
                       ref.current.classList.remove('opacity-0');
                     }
                   }}
+                  priority={true}
                 />
               </div>
             );

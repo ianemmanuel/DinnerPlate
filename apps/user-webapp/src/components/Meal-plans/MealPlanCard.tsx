@@ -62,9 +62,10 @@ export function MealPlanCard({ plan, isWishlisted, onWishlistToggle }: MealPlanC
               src={plan.image}
               alt={plan.name}
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(min-width: 1540px) 463px, (min-width: 1280px) 377px, (min-width: 1040px) 292px, (min-width: 780px) 347px, (min-width: 640px) 283px, calc(100vw - 49px)"
               className="object-cover transition-transform duration-300 group-hover:scale-105"
               style={{ transformOrigin: 'center' }}
+              priority={true}
             />
             
             <div className="absolute top-3 left-3 flex flex-wrap gap-2 z-10">
