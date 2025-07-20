@@ -112,6 +112,7 @@ export default function FeaturedPromotions() {
                   width={260}
                   height={150}
                   className="w-full h-36 object-cover rounded-t-lg"
+                  priority
                 />
                 <div className="p-3 text-foreground">
                   <h3 className="font-medium">{ad.title}</h3>

@@ -73,7 +73,7 @@ export default function HeroSlider() {
               alt={slide.title}
               fill
               className="object-cover brightness-50"
-              priority={isActive}
+              priority
             />
 
             {/* Slide Tag */}
